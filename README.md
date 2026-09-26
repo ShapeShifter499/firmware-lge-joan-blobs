@@ -11,7 +11,7 @@ and stays text-only.
 | tree | contents |
 |---|---|
 | `common/` | A540 GPMU and QCA Bluetooth firmware — identical on every joan |
-| `h930/` | modem, ADSP, IPA, WLAN and zap shader for **H930, US998, H932PR and every other joan** |
+| `h930/` | modem, ADSP, SLPI (sensor DSP), Venus (video codec), IPA, WLAN and zap shader for **H930, US998, H932PR and every other joan** |
 | `h932/` | the same set for an **exact LG-H932** |
 
 `MANIFEST.tsv` lists every file as `tree`, install path, size and **sha256**.
@@ -34,6 +34,13 @@ work: the `h930` zap runs on a US998, verified on hardware.
 ## Provenance
 
 `h930/` comes from a US998 on Pie `30b`; `h932/` from the `H93230d` KDZ.
+The Venus and SLPI images come from the same sources: the `h930` set from that
+US998's NON-HLOS (`modem`) partition, whose `modem.mdt` and `adsp.mdt` match
+the `h930` rows above byte for byte, and the `h932` set from the KDZ's
+`modem` image (KDZ md5 `eea31e240d28ee36efb3b3ee9a7533ec`). Neither set is
+shared: Venus differs in 2 of 6 files (the signed `.mdt` among them) and
+SLPI v2 in 13 of 15, so each variant carries its own. Only `slpi_v2` ships;
+`slpi_v1` is for pre-production v1 silicon.
 `common/` is mirrored from commit-pinned TheMuppets vendor trees.
 
 WLAN `board.bin` is the **stock generic** board data from each variant's system
